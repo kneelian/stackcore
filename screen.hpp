@@ -85,7 +85,7 @@ struct SCREEN
 	{
 		for(int i = 0; i < WIDTH * HEIGHT; i++)
 		{
-			pixptr[i] = 0xffffffff;
+			pixptr[i] = 0;
 		}
 		update();
 		return true;

@@ -14,7 +14,12 @@
 #define BYTE_s int8_t
 
 class cpu_t { 
+
 public:
+	uint64_t  i_ticks    = 0;
+	uint32_t  i_syndrome = 0;
+
+	cpu_t(uint64_t*);
 	cpu_t();
 	~cpu_t();
 
@@ -34,7 +39,7 @@ public:
 			return true;
 		}
 		if(DEBUG)
-		{	fmt::print("{} to add new memory page\n", fmt::styled("Failed", fmt::fg(fmt::color::dark_red)) ); }
+		{	fmt::print("{} to add new memory page\n", fmt::styled("Failed", fmt::fg(fmt::color::crimson)) ); }
 		return false;
 	}
 
@@ -48,8 +53,8 @@ private:
 
 	std::stack<WORD, std::array<WORD, 64>> i_stack;
 
-	std::unique_ptr<std::array<BYTE, (1<<16)>> i_insn_page;
-	std::unique_ptr<std::array<BYTE, (1<<16)>> i_zero_page;
+	std::unique_ptr<std::array<BYTE, (1<<16)>> i_insn_page;	// aka ROM page
+	std::unique_ptr<std::array<BYTE, (1<<16)>> i_zero_page; // aka zeropage
 
 	std::array< std::array<BYTE, (1<<16)>*, 4> i_data_extra = { nullptr, nullptr, nullptr, nullptr };
 
@@ -70,14 +75,27 @@ private:
 cpu_t::cpu_t()
 {
 	if(DEBUG)
-	{	fmt::print("CPU constructor reached"); }
+	{	fmt::print("Default CPU constructor reached\n"); }
 	i_insn_page = std::make_unique<std::array<BYTE, (1<<16)>>();
 	if(DEBUG)
 	{	fmt::print("{} instruction page\n", fmt::styled("Allocated", fmt::fg(fmt::color::lime_green)) ); }
 	i_zero_page = std::make_unique<std::array<BYTE, (1<<16)>>();
 	if(DEBUG)
 	{	fmt::print("{} zero page\n", fmt::styled("Allocated", fmt::fg(fmt::color::lime_green)) ); }
+}
 
+cpu_t::cpu_t(uint64_t* external_signaller)
+{
+	if(DEBUG)
+	{	fmt::print("Parametrised CPU constructor reached. {}: this is currently unimplemented\n", 
+		fmt::styled("Warning", fmt::fg(fmt::color::orange))); }
+	/*i_signaller = external_signaller;*/
+	i_insn_page = std::make_unique<std::array<BYTE, (1<<16)>>();
+	if(DEBUG)
+	{	fmt::print("{} instruction page\n", fmt::styled("Allocated", fmt::fg(fmt::color::lime_green)) ); }
+	i_zero_page = std::make_unique<std::array<BYTE, (1<<16)>>();
+	if(DEBUG)
+	{	fmt::print("{} zero page\n", fmt::styled("Allocated", fmt::fg(fmt::color::lime_green)) ); }
 }
 
 cpu_t::~cpu_t()

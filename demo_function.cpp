@@ -16,9 +16,9 @@ void enn_sdl_demo()
 	
 	_newscreen.clear();
 
-	for(int a = 40; a < 80; a++)
+	for(int a = 40; a < 220; a++)
 	{
-		for(int b = 320; b < 340; b++)
+		for(int b = 320; b < 360; b++)
 		{
 			_newscreen.write(a, b, 0x00abbcff);
 		}
