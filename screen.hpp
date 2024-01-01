@@ -1,3 +1,5 @@
+#pragma once
+
 #include<SDL2/SDL.h>
 #include "fmt/core.h"
 #include "fmt/color.h"
@@ -6,6 +8,8 @@
 
 #define _WIDTH  640
 #define _HEIGHT 480
+
+void enn_sdl_demo();
 
 struct SCREEN
 {
