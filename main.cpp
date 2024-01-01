@@ -3,6 +3,8 @@
 #include "screen.hpp"
 #include "cpu.hpp"
 
+#include "readfile.hpp"
+
 void enn_sdl_demo();
 
 int main()
@@ -25,8 +27,6 @@ int main()
 
 		the CPU can tell you something happened that requires your attention because
 		the .tick() function returns a boolean; it will return false whenever it wants
-		the caller to pay attention to something, which will be signalled either in
-		an external signaller whose pointer is provided by the caller, so that 
-		it can persist even after the CPU object is destroyed, or an internal duplicate
-		in the event that this kind of behaviour is undesirable.
+		the caller to pay attention to something. The type of issue will be signalled
+		in the i_syndrome public member.
 */

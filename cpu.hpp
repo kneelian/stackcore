@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stack>
 #include <array>
 #include <memory>
@@ -7,11 +9,8 @@
 
 #include "defines.hpp"
 
-#define WORD uint16_t
-#define BYTE uint8_t
-
-#define WORD_S int16_t
-#define BYTE_s int8_t
+#include "insn_decode.hpp"
+#include "readfile.hpp"
 
 class cpu_t { 
 
@@ -50,6 +49,8 @@ private:
 
 	bool push(WORD);
 	bool pop(WORD&);
+
+	bool load_insn_page(std::string);
 
 	std::stack<WORD, std::array<WORD, 64>> i_stack;
 
