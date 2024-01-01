@@ -2,10 +2,25 @@
 #include "fmt/core.h"
 #include "fmt/color.h"
 #include <SDL2/SDL.h>
+#include <random>
 
 #include "screen.hpp"
 
+void enn_sdl_demo();
 int main()
+{
+	enn_sdl_demo();
+}
+
+/*
+	basically there's no real ISA or even implementation 
+
+	and the cpu is now binary
+
+*/
+
+
+void enn_sdl_demo()
 {
 	SCREEN _newscreen;
 
@@ -43,21 +58,24 @@ int main()
 		} 
 	}
 
-	int j = 0;
-	for(int i = 0; i < _newscreen.h * _newscreen.w; i++)
-	{
-		_newscreen.write(i, j);
-		j += (131 << 24) + (0 << 16) + (251 << 8);
-	}
-	_newscreen.upd();
-	SDL_Delay(50);
-	for(int i = 0; i < _newscreen.h * _newscreen.w; i++)
-	{
-		_newscreen.write(i, j);
-		j += (151 << 24) + (14 << 16) + (221 << 8);
-	}
-	_newscreen.upd();
+	std::random_device rd;
+	std::mt19937 gen(rd());
+    std::uniform_int_distribution<> distrib(0, 255);
+
+    int32_t j = 0;
+
+    for(int i = 50; i; i--)
+    {
+		for(int i = 0; i < _newscreen.h * _newscreen.w; i++)
+		{
+			_newscreen.write(i, j);
+			j += (distrib(gen) << 16) + (distrib(gen) << 8) + ( 0);
+		}
+		_newscreen.upd();
+		SDL_Delay(10);
+    }
+
 	SDL_Delay(50);
 
-	return 0;
+	return;
 }
