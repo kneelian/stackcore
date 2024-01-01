@@ -1,5 +1,5 @@
 # stackcore
-A tiny toy fantasy CPU core/ISA built around the stack as the main storage unit. 
+A tiny toy fantasy CPU core/ISA built around a hardware stack as the main storage unit. 
 
 Its main feature is ease of implementation and simple structure, with more focus on developer convenience than viability as a real CPU.
 
@@ -9,7 +9,7 @@ Its main feature is ease of implementation and simple structure, with more focus
 
 # Internals
 
-The stackcore is a 16-bit toy CPU. It is a simple stack machine that is centred around a 64-word stack as the main internal data structure, with two address registers (named `A` and `B`) used primarily for addressing the heap. The address registers themselves are 16 bits wide, and heap memory is divided into 64KB pages (theoretically, 2^16 of them, though in practice only 4 pages would be available to the programmer at best).
+The stackcore is a 16-bit toy CPU. It is a simple stack machine that is centred around a 64-word hardware stack as the main internal data structure, with two address registers (named `A` and `B`) used primarily for addressing the heap. The address registers themselves are 16 bits wide, and heap memory is divided into 64KB pages (theoretically, 2^16 of them, though in practice only 4 pages would be available to the programmer at best).
 
 The ISA of the CPU is simple: instructions are all one byte wide, and optional immediates are all two bytes (so a single step might fetch either one or three bytes of code). 
 

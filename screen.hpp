@@ -2,6 +2,8 @@
 #include "fmt/core.h"
 #include "fmt/color.h"
 
+#include "defines.hpp"
+
 #define _WIDTH  640
 #define _HEIGHT 480
 
@@ -22,10 +24,10 @@ struct SCREEN
 	{
 		if(SDL_Init(SDL_INIT_VIDEO) < 0)
 		{
-			fmt::print(
+			if(DEBUG) { fmt::print(
 				"{}: SDL failed to initialise\n",
 				fmt::styled("ERROR", fmt::fg(fmt::color::crimson) | fmt::emphasis::bold)
-			);
+			); }
 			throw;
 		}
 		window = 
@@ -40,10 +42,10 @@ struct SCREEN
 			);
 		if(window == NULL)
 		{
-			fmt::print(
-				"{}: SDL window failed on creation\n",
+			if(DEBUG) { fmt::print(
+				"{}: SDL window failed after creation\n",
 				fmt::styled("ERROR", fmt::fg(fmt::color::crimson) | fmt::emphasis::bold)
-			);
+			); }
 			throw;
 		}
 		SDL_Surface* surface = SDL_GetWindowSurface(window);
@@ -62,6 +64,17 @@ struct SCREEN
 		SDL_DestroyWindow(window);
 		SDL_FreeSurface(surface);
     	SDL_Quit();
+    	if(DEBUG)
+    	{	
+		    fmt::print("SDL destruction {}\n",
+		    	fmt::styled
+		        (
+		        	"successful", 
+		           	fmt::fg(fmt::color::lime_green) | 
+		           	fmt::emphasis::bold
+				)
+		    ); 
+	    }
 	}
 
 	bool clear()
@@ -70,7 +83,7 @@ struct SCREEN
 		{
 			pixptr[i] = 0xffffffff;
 		}
-		upd();
+		update();
 		return true;
 	}
 	bool write(int x, int y, uint32_t colour)	// column and row
@@ -85,7 +98,7 @@ struct SCREEN
 		pixptr[a] = colour;
 		return true;
 	}
-	bool upd()
+	bool update()
 	{
 		return SDL_UpdateWindowSurface(window);
 	}
